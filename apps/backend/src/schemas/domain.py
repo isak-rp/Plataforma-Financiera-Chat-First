@@ -30,13 +30,13 @@ class EstadoTransaccion(str, Enum):
 
 class Perfil(BaseModel):
     id: str
-    nombre: str
-    email: str
+    nombre: str | None = "Nuevo Usuario"  # Le damos un nombre provisional
+    email: str | None = None
     avatar_url: str | None = None
-    moneda: str
-    zona_horaria: str
-    creado_en: str
-    actualizado_en: str
+    moneda: str | None = "MXN"
+    zona_horaria: str | None = "America/Mexico_City"
+    creado_en: str | None = None
+    actualizado_en: str | None = None
 
 
 class Espacio(BaseModel):
