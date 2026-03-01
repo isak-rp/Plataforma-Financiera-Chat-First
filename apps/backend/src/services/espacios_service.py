@@ -1,6 +1,6 @@
 from src.repositories.espacios_repository import EspaciosRepository
 from src.schemas.domain import Apartado, Espacio, EspacioDetalle, MiembroEspacio, Transaccion
-
+from src.schemas.espacios import CrearEspacioRequest
 
 class EspaciosService:
     def __init__(self) -> None:
@@ -40,3 +40,13 @@ class EspaciosService:
     def invite_member(self, perfil_id: str, espacio_id: str, email: str, rol: str) -> MiembroEspacio:
         row = self.repository.invite_member(perfil_id, espacio_id, email, rol)
         return MiembroEspacio.model_validate(row)
+
+    def create_espacio(self, perfil_id: str, payload: CrearEspacioRequest) -> Espacio:
+        row = self.repository.create_espacio(
+            perfil_id=perfil_id,
+            nombre=payload.nombre,
+            tipo=payload.tipo.value,
+            descripcion=payload.descripcion,
+            icono=payload.icono
+        )
+        return Espacio.model_validate(row)

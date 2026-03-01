@@ -4,6 +4,7 @@ from src.core.security import CurrentUser, get_current_user
 from src.schemas.domain import Apartado, Espacio, EspacioDetalle, MiembroEspacio, Transaccion
 from src.schemas.espacios import InvitarMiembroRequest
 from src.services.espacios_service import EspaciosService
+from src.schemas.espacios import CrearEspacioRequest
 
 router = APIRouter(tags=["espacios"])
 
@@ -49,3 +50,12 @@ async def invite_member(
 ) -> MiembroEspacio:
     service = EspaciosService()
     return service.invite_member(current_user.id, espacio_id, payload.email, payload.rol.value)
+
+@router.post("/espacios", response_model=Espacio)
+async def create_espacio(
+    payload: CrearEspacioRequest,
+    current_user: CurrentUser = Depends(get_current_user),
+) -> Espacio:
+    service = EspaciosService()
+    return service.create_espacio(current_user.id, payload)
+    

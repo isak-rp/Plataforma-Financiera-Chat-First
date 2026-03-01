@@ -221,3 +221,29 @@ class EspaciosRepository:
             .execute()
         )
         return inserted.data[0]
+
+    def create_espacio(self, perfil_id: str, nombre: str, tipo: str, descripcion: str, icono: str):
+        data = {
+            "nombre": nombre,
+            "tipo": tipo,
+            "descripcion": descripcion,
+            "icono": icono,
+            "creador_id": perfil_id,
+            "estado": "activo"
+        }
+        
+        result = self.client.table("espacios").insert(data).execute()
+        
+        if not result.data:
+            raise HTTPException(status_code=500, detail="Error al crear el espacio")
+            
+        nuevo_espacio = result.data[0]
+        
+        self.client.table("miembros_espacio").insert({
+            "espacio_id": nuevo_espacio["id"],
+            "perfil_id": perfil_id,
+            "rol": "administrador",
+            "activo": True
+        }).execute()
+        
+        return nuevo_espacio
