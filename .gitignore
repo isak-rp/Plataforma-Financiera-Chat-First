@@ -1,0 +1,24 @@
+# Node
+node_modules/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build outputs
+.next/
+dist/
+coverage/
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# OS
+.DS_Store
+
+.cursorrules

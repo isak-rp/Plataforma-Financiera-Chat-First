@@ -1,33 +1,21 @@
 {
-  "name": "plataforma-financiera-chat-first",
+  "name": "plataforma-financiera-chat-first-monorepo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "^15.3.2",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "lucide-react": "^0.513.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.3.0",
-    "@radix-ui/react-avatar": "^1.1.10",
-    "@radix-ui/react-progress": "^1.1.4",
-    "@radix-ui/react-scroll-area": "^1.2.9",
-    "@radix-ui/react-separator": "^1.1.7",
-    "@radix-ui/react-slot": "^1.2.3"
+    "dev": "pnpm --filter @pfc/frontend dev",
+    "build": "pnpm --filter @pfc/frontend build",
+    "start": "pnpm --filter @pfc/frontend start",
+    "lint": "pnpm --filter @pfc/frontend lint",
+    "dev:frontend": "pnpm --filter @pfc/frontend dev",
+    "dev:backend": "cd apps/backend && uv run uvicorn src.main:app --reload --host 0.0.0.0 --port 8000",
+    "dev:all": "concurrently -n frontend,backend \"pnpm dev:frontend\" \"pnpm dev:backend\"",
+    "lint:all": "pnpm --filter @pfc/frontend lint && pnpm run check:architecture",
+    "test:all": "pnpm run check:architecture && pnpm run check:frontend-services",
+    "check:architecture": "bash scripts/check-architecture.sh",
+    "check:frontend-services": "bash scripts/check-frontend-services.sh"
   },
   "devDependencies": {
-    "@types/node": "^22.15.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0",
-    "typescript": "^5.8.0",
-    "tailwindcss": "^4",
-    "@tailwindcss/postcss": "^4"
+    "concurrently": "^9.2.1"
   }
 }
