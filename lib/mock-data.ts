@@ -159,3 +159,107 @@ export const mockWorkspaces: Workspace[] = [
     icon: "plane",
   },
 ]
+
+// --- Shared expense members ---
+
+export interface SharedMember {
+  id: string
+  name: string
+  email: string
+  initials: string
+  role: "propietario" | "administrador" | "miembro"
+  accepted: boolean
+}
+
+export const mockSharedMembers: SharedMember[] = [
+  { id: "user-1", name: "Carlos Lopez", email: "carlos@email.com", initials: "CL", role: "administrador", accepted: true },
+  { id: "user-2", name: "Maria Lopez", email: "maria@email.com", initials: "ML", role: "administrador", accepted: true },
+  { id: "user-3", name: "Sofia Lopez", email: "sofia@email.com", initials: "SL", role: "miembro", accepted: true },
+  { id: "user-4", name: "Pedro Lopez", email: "pedro@email.com", initials: "PL", role: "miembro", accepted: false },
+]
+
+// --- Shared transactions with states ---
+
+export type TransactionStatus = "confirmada" | "pendiente" | "aceptada" | "rechazada" | "liquidada"
+
+export interface SharedTransaction {
+  id: string
+  description: string
+  amount: number
+  category: string
+  categoryIcon: string
+  createdBy: string
+  createdByInitials: string
+  status: TransactionStatus
+  dividedBetween: string[]
+  date: string
+  timestamp: string
+}
+
+export const mockSharedTransactions: SharedTransaction[] = [
+  {
+    id: "txn-1",
+    description: "Despensa del Costco",
+    amount: 3200,
+    category: "Comida",
+    categoryIcon: "utensils",
+    createdBy: "Carlos Lopez",
+    createdByInitials: "CL",
+    status: "confirmada",
+    dividedBetween: ["user-1", "user-2"],
+    date: "2026-02-28",
+    timestamp: "10:30 AM",
+  },
+  {
+    id: "txn-2",
+    description: "Recibo de luz - febrero",
+    amount: 1850,
+    category: "Servicios",
+    categoryIcon: "zap",
+    createdBy: "Maria Lopez",
+    createdByInitials: "ML",
+    status: "pendiente",
+    dividedBetween: ["user-1", "user-2", "user-3"],
+    date: "2026-02-27",
+    timestamp: "3:15 PM",
+  },
+  {
+    id: "txn-3",
+    description: "Gas LP tanque completo",
+    amount: 2100,
+    category: "Servicios",
+    categoryIcon: "flame",
+    createdBy: "Carlos Lopez",
+    createdByInitials: "CL",
+    status: "aceptada",
+    dividedBetween: ["user-1", "user-2"],
+    date: "2026-02-25",
+    timestamp: "11:00 AM",
+  },
+  {
+    id: "txn-4",
+    description: "Netflix familiar",
+    amount: 299,
+    category: "Entretenimiento",
+    categoryIcon: "tv",
+    createdBy: "Sofia Lopez",
+    createdByInitials: "SL",
+    status: "liquidada",
+    dividedBetween: ["user-1", "user-2", "user-3", "user-4"],
+    date: "2026-02-20",
+    timestamp: "9:00 AM",
+  },
+  {
+    id: "txn-5",
+    description: "Reparacion de la puerta",
+    amount: 800,
+    category: "Hogar",
+    categoryIcon: "wrench",
+    createdBy: "Pedro Lopez",
+    createdByInitials: "PL",
+    status: "rechazada",
+    dividedBetween: ["user-1", "user-3"],
+    date: "2026-02-18",
+    timestamp: "2:45 PM",
+  },
+]

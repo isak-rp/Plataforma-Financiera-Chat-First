@@ -1,9 +1,25 @@
 import { cn } from "@/lib/utils"
-import type { ChatMessage as ChatMessageType } from "@/lib/mock-data"
 import { Bot } from "lucide-react"
+import { ActionCard } from "./action-card"
+
+type ActionType = "gasto_registrado" | "consulta_saldo" | "resumen" | "error"
+
+export interface ChatMessageData {
+  id: string
+  text: string
+  sender: "user" | "bot"
+  timestamp: string
+  action?: ActionType
+  actionData?: {
+    monto?: number
+    categoria?: string
+    restante?: number
+  }
+  isError?: boolean
+}
 
 interface ChatMessageProps {
-  message: ChatMessageType
+  message: ChatMessageData
 }
 
 export function ChatMessage({ message }: ChatMessageProps) {
@@ -26,10 +42,22 @@ export function ChatMessage({ message }: ChatMessageProps) {
           "max-w-[80%] rounded-2xl px-4 py-2.5",
           isUser
             ? "rounded-br-md bg-chat-user text-foreground"
-            : "rounded-bl-md bg-chat-bot text-foreground"
+            : "rounded-bl-md bg-chat-bot text-foreground",
+          message.isError && "border border-destructive/30 bg-destructive/10"
         )}
       >
-        <p className="text-sm leading-relaxed">{message.text}</p>
+        <p className={cn(
+          "text-sm leading-relaxed",
+          message.isError && "text-destructive"
+        )}>
+          {message.text}
+        </p>
+
+        {/* Action card for bot responses */}
+        {message.action && !isUser && (
+          <ActionCard action={message.action} data={message.actionData} />
+        )}
+
         <p
           className={cn(
             "mt-1 text-[10px]",

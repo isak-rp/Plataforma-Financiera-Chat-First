@@ -1,4 +1,5 @@
-import { User, Home, Plane, Users, ChevronRight } from "lucide-react"
+import Link from "next/link"
+import { User, Home, Plane, Users, Briefcase, GraduationCap, ChevronRight } from "lucide-react"
 import { formatCurrency } from "@/lib/utils"
 import type { Workspace } from "@/lib/mock-data"
 
@@ -6,6 +7,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   user: User,
   home: Home,
   plane: Plane,
+  users: Users,
+  briefcase: Briefcase,
+  "graduation-cap": GraduationCap,
 }
 
 interface WorkspaceCardProps {
@@ -16,8 +20,8 @@ export function WorkspaceCard({ workspace }: WorkspaceCardProps) {
   const Icon = iconMap[workspace.icon] || Users
 
   return (
-    <button
-      type="button"
+    <Link
+      href={`/espacios/${workspace.id}`}
       className="flex w-full items-center gap-4 rounded-xl border border-card-border bg-card p-4 text-left transition-colors hover:border-primary/30"
     >
       {/* Icon */}
@@ -48,6 +52,6 @@ export function WorkspaceCard({ workspace }: WorkspaceCardProps) {
         </span>
         <ChevronRight className="h-4 w-4 text-muted-foreground" />
       </div>
-    </button>
+    </Link>
   )
 }

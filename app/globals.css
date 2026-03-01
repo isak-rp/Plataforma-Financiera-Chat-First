@@ -66,3 +66,13 @@ body {
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 1rem);
 }
+
+/* Bottom sheet slide-up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
